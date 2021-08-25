@@ -1,0 +1,13 @@
+node {
+    stage('Git-checkout'){
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/Rohankarpe10/encrypt-decrypt-app']]])
+    }
+    
+    stage('Build-docker-image'){
+        sh 'sudo docker build -t rohankarpe10/encrypt-decrypt-app .'
+    } 
+    
+    stage('Push to dockerhub'){
+        sh 'sudo docker push rohankarpe10/encrypt-decrypt-ap'
+    }
+}
