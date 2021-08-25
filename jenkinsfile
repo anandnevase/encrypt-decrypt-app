@@ -8,6 +8,6 @@ node {
     } 
     
     stage('Push to dockerhub'){
-        sh 'sudo docker push rohankarpe10/encrypt-decrypt-ap'
+        sh 'sudo docker push rohankarpe10/encrypt-decrypt-app'
     }
 }
