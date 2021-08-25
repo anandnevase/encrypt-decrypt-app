@@ -1,6 +1,6 @@
 replica: 1
 image:
-  repo: docker9119/encrpt-decrypt-app
+  repo: rohankarpe10/encrypt-decrypt-app
   tag: latest
 healthcheck: 
   url: /api/health
