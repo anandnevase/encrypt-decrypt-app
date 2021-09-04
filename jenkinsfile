@@ -18,11 +18,11 @@ node('minikube'){
     stage('Deploy app to k8s server'){
       
       try{
-        sh 'helm install --name encrypt-decrypt-app ./helm-deployment/encrypt-decrypt-app --namespace apps'
+        sh 'helm install encrypt-decrypt-app --atomic ./helm-deployment/encrypt-decrypt-app --namespace apps'
       }
       catch(Exception ex){
         echo "upgading application"
-        sh 'helm upgrade --wait  encrypt-decrypt-app ./helm-deployment/encrypt-decrypt-app --namespace apps'
+        sh 'helm upgrade encrypt-decrypt-app --atomic ./helm-deployment/encrypt-decrypt-app --namespace apps'
       }
     }
 }
