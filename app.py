@@ -19,7 +19,7 @@ def api_response(input='', output='', status='success', msg=''):
 @app.route('/api/health', methods=['GET'])
 def ping():
     try:
-        return api_response(output="ok", msg="version:v1.0.0")
+        return api_response(output="ok", msg="version:v1.0.1")
     except Exception as e:
         raise e
 
