@@ -22,4 +22,5 @@ node {
         echo "upgading application"
         sh 'sudo helm upgrade --wait  encrypt-decrypt-app ./helm-deployment/encrypt-decrypt-app --namespace apps'
       }
+    }
 }
