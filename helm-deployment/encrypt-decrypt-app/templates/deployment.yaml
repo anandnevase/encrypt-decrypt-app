@@ -13,6 +13,8 @@ spec:
       labels:
         app: {{ .Values.name }}
         tier: backend
+      annotations:
+        timestamp: {{ now | quote }}
     spec:
       containers:
         - name: {{ .Values.name }}
