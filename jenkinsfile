@@ -10,4 +10,16 @@ node {
     stage('Push to dockerhub'){
         sh 'sudo docker push rohankarpe10/encrypt-decrypt-app'
     }
+
+    stage('Deploy app to k8s server'){
+
+      agent { label minikube }
+      
+      try{
+        sh 'sudo helm install --name encrypt-decrypt-app ./helm-deployment/encrypt-decrypt-app --namespace apps'
+      }
+      catch(Exception ex){
+        echo "upgading application"
+        sh 'sudo helm upgrade --wait  encrypt-decrypt-app ./helm-deployment/encrypt-decrypt-app --namespace apps'
+      }
 }
