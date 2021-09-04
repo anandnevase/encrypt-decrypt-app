@@ -1,27 +1,30 @@
-node {
-    stage('Git-checkout'){
-        agent { label master }
-        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/Rohankarpe10/encrypt-decrypt-app']]])
-    }
-    
-    stage('Build-docker-image'){
-        agent { label master }
-        sh 'sudo docker build -t rohankarpe10/encrypt-decrypt-app .'
-    } 
-    
-    stage('Push to dockerhub'){
-        agent { label master }
-        sh 'sudo docker push rohankarpe10/encrypt-decrypt-app'
-    }
+pipeline {  
+    stages{
+        agent none
+        stage('Git-checkout'){
+            agent { node { label 'master' } }
+            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/Rohankarpe10/encrypt-decrypt-app']]])
+        }
+        
+        stage('Build-docker-image'){
+            agent { label master }
+            sh 'sudo docker build -t rohankarpe10/encrypt-decrypt-app .'
+        } 
+        
+        stage('Push to dockerhub'){
+            agent { label master }
+            sh 'sudo docker push rohankarpe10/encrypt-decrypt-app'
+        }
 
-    stage('Deploy app to k8s server'){
-      agent { label minikube }
-      try{
-        sh 'helm install encrypt-decrypt-app --atomic ./helm-deployment/encrypt-decrypt-app --namespace apps'
-      }
-      catch(Exception ex){
-        echo "upgading application"
-        sh 'helm upgrade encrypt-decrypt-app --atomic ./helm-deployment/encrypt-decrypt-app --namespace apps'
-      }
+        stage('Deploy app to k8s server'){
+        agent { label minikube }
+        try{
+            sh 'helm install encrypt-decrypt-app --atomic ./helm-deployment/encrypt-decrypt-app --namespace apps'
+        }
+        catch(Exception ex){
+            echo "upgading application"
+            sh 'helm upgrade encrypt-decrypt-app --atomic ./helm-deployment/encrypt-decrypt-app --namespace apps'
+        }
+        }
     }
 }
