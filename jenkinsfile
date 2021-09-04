@@ -1,4 +1,4 @@
-node {
+node('master') {
     stage('Git-checkout'){
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/Rohankarpe10/encrypt-decrypt-app']]])
     }
@@ -8,12 +8,14 @@ node {
     } 
     
     stage('Push to dockerhub'){
+    
         sh 'sudo docker push rohankarpe10/encrypt-decrypt-app'
     }
+}
+
+node('minikube'){
 
     stage('Deploy app to k8s server'){
-
-      agent { label minikube }
       
       try{
         sh 'sudo helm install --name encrypt-decrypt-app ./helm-deployment/encrypt-decrypt-app --namespace apps'
