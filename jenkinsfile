@@ -7,7 +7,7 @@ node('minikube') {
     
     stage('Build-docker-image'){
 
-        sh 'sudo docker build -t rohankarpe10/encrypt-decrypt-app .'
+        sh 'sudo docker build -t anandnevase/encrypt-decrypt-app .'
     } 
     
     stage('Push to dockerhub'){
