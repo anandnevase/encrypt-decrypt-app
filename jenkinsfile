@@ -12,7 +12,7 @@ node('minikube') {
     
     stage('Push to dockerhub'){
  
-        sh 'sudo docker push rohankarpe10/encrypt-decrypt-app'
+        sh 'sudo docker push anandnevase/encrypt-decrypt-app'
     }
 
     stage('Deploy app to k8s server'){
