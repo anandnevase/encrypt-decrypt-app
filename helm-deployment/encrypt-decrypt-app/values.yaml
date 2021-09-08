@@ -1,6 +1,6 @@
 replica: 1
 image:
-  repo: rohankarpe10/encrypt-decrypt-app
+  repo: anandnevase/encrypt-decrypt-app
   tag: latest
 healthcheck: 
   url: /api/health
